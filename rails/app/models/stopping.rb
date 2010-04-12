@@ -17,7 +17,7 @@ class Stopping < ActiveRecord::Base
     dead_stop_ids = []
 
     file = 'stop_times.txt'
-    fields = Generator.get_fields(file}
+    fields = Generator.get_fields(file)
 
     Generator.generate(file) do |row|
       index += 1
@@ -28,13 +28,13 @@ class Stopping < ActiveRecord::Base
       end
 
       next false if dead_trip_ids.include?(row[fields[:trip_id]])
-      trip = Trip.find_by_mbta_id row[fields[:trip_id]]
+      trip = Trip.find_by_gtfs_id row[fields[:trip_id]]
       if trip.nil? 
         dead_trip_ids << row[fields[:trip_id]]
         next false 
       end
       next false if dead_stop_ids.include?(row[fields[:stop_id]])
-      stop = Stop.find_by_mbta_id row[fields[:stop_id]]
+      stop = Stop.find_by_gtfs_id row[fields[:stop_id]]
       if stop.nil? 
         dead_stop_ids << row[fields[:stop_id]]
         next false
