@@ -3,7 +3,7 @@
 
 development:
   adapter: mysql
-  database: mbta_development
+  database: gtfs_development
   username: root
   password:
 
@@ -27,7 +27,7 @@ test:
 
 production:
   adapter: mysql
-  database: mbta_production
+  database: gtfs_production
   host: localhost
   username: root
 
