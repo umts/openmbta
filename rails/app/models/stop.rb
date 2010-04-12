@@ -1,7 +1,7 @@
 class Stop < ActiveRecord::Base
   has_many :stoppings
   has_many :trips, :through => :stoppings
-  validates_uniqueness_of :mbta_id
+  validates_uniqueness_of :gtfs_id
 
   include TimeFormatting
 
@@ -51,11 +51,14 @@ class Stop < ActiveRecord::Base
   end
 
   def self.populate
-    Generator.generate('stops.txt') do |row|
-      Stop.create :mbta_id => row[0],
-        :name => row[2],
-        :lat => row[4],
-        :lng => row[5]
+    file = 'stops.txt'
+    fields = Generator.get_fields(file)
+
+    Generator.generate(file) do |row|
+      Stop.create :gtfs_id => row[fields[:stop_id]],
+        :name => row[fields[:stop_name]],
+        :lat => row[fields[:stop_lat]],
+        :lng => row[fields[:stop_lon]]
     end
   end
 end

@@ -1,6 +1,6 @@
 class Route < ActiveRecord::Base
   has_many :trips
-  validates_uniqueness_of :mbta_id
+  validates_uniqueness_of :gtfs_id
 
   named_scope :with_short_names, :conditions => "short_name is not null"
 
@@ -25,11 +25,14 @@ class Route < ActiveRecord::Base
   end
 
   def self.populate
-    Generator.generate('routes.txt') do |row|
-      Route.create :mbta_id => row[0],
-        :short_name => row[2],
-        :long_name => row[2],
-        :route_type => row[5]
+    file = 'routes.txt'
+    fields = Generator.get_fields(file)
+
+    Generator.generate(file) do |row|
+      Route.create :gtfs_id => row[fields[:route_id]],
+        :short_name => row[fields[:route_short_name]],
+        :long_name => row[fields[:route_long_name]],
+        :route_type => row[fields[:route_type]]
     end
   end
 
