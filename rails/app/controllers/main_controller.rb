@@ -13,6 +13,8 @@ class MainController < ApplicationController
       @twittags = Agency.all.map { |a| a.acronym.downcase } + 
         TWIT_CONFIG['additional_tags']
     end
+
+    @agency_links = Agency.links
   end
 
 end
