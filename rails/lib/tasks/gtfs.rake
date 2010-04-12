@@ -5,7 +5,7 @@ namespace :gtfs do
 
   desc "populate from data files"
   task :populate_only => [:environment, 'db:migrate'] do
-    [Route, Service, ServiceException, Trip, Stop, Stopping].each do |x|
+    [Agency, Route, Service, ServiceException, Trip, Stop, Stopping].each do |x|
       puts "Populating #{x.to_s}"
       x.populate
     end
