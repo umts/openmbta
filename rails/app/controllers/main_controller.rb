@@ -8,7 +8,11 @@ class MainController < ApplicationController
       @modes << mode.to_s.underscore unless mode.routes.size == 0
     end
 
-    @twittags = Agency.all.map { |a| a.acronym.downcase }
+    @twittags = []
+    if TWIT_CONFIG['enabled']
+      @twittags = Agency.all.map { |a| a.acronym.downcase } + 
+        TWIT_CONFIG['additional_tags']
+    end
   end
 
 end

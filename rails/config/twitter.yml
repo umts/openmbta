@@ -1,0 +1,7 @@
+# if enabled, the main page will display search links for each Agency's
+# acronym.  If you want to include other searches, use the additional_tags
+# list; quotes are reqired for hashtags, seperate tags with commas.
+# (additional_tags: ['#sometag', '#someothertag'])
+
+enabled: true
+additional_tags: []
