@@ -5,12 +5,14 @@
 <ul class="main-menu">
   <% @modes.each do |m| %>
     <li>
-    <%= link_to m.split("_").map(&:capitalize).join(' '), "/routes/#{m}" %>
+    <%= link_to "#{m.titleize} Schedules", "/routes/#{m}" %>
     </li>
   <% end %>
+  <!--
   <li>
     <%= link_to "T-Alerts", '/alerts.html' %> 
   </li>
+  -->
   <li>
     <%= link_to "Twitter #mbta", tweets_path  %> 
   </li>

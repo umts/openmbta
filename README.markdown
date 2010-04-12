@@ -23,12 +23,10 @@ code is located in the `rails` directory of the project.  Set up the
 `config/database.yml` file as usual to suit your development environment and
 then run `rake db:migrate`.
 
-Next, create a folder inside the `rails` directory named `data`. 
-
-Now you need to get the MBTA GTFS data from the [EOT Developers
-Page](http://www.eot.state.ma.us/developers/). Download the full MBTA GTFS zip
-file containing all the services. This file is currently linked from the middle
-of the page.
+Now you need to get your GTFS data. The General Transit Feed Specification wiki
+maintains a list of many [public feeds](http://code.google.com/p/
+googletransitdatafeed/wiki/PublicFeeds); you might also check the [GTFS Data
+Exchange](http://www.gtfs-data-exchange.com/).
 
 Unzip the file. You should see a bunch of *.txt files. These are the GTFS files.
 Transfer these files to the `rails/data` directory.
@@ -36,12 +34,12 @@ Transfer these files to the `rails/data` directory.
 Now we're ready to populate the MySQL database with the GFTS data. There is a
 rake task for this. Run 
 
-    rake mbta:populate
+    rake gtfs:populate
 
-Be warned that the GFTS dataset is huge, with over 3 million rows. On my
-Macbook Pro this task takes more than 2 or 3 hours to finish.
+Be warned that the GFTS dataset can be huge (e.g. over 3 million rows in the
+MBTA dataset). On my Macbook Pro this task takes more than 2 or 3 hours to finish.
 
-After the `mbta:populate` task is finished, you should be able to start the
+After the `gtfs:populate` task is finished, you should be able to start the
 Rails app with `script/server`. 
 
 Now we can to run a local copy of the OpenMBTA iPhone app as a client to the
