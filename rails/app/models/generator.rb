@@ -25,7 +25,7 @@ module Generator
     field_list = reader.shift
 
     field_list.each do |f|
-      fields[f.to_sym] = field_list.index(f)
+      fields[f.strip.to_sym] = field_list.index(f)
     end
       
     return fields

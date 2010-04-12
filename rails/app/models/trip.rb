@@ -41,7 +41,7 @@ class Trip < ActiveRecord::Base
       Trip.create :route => route,
         :service => service,
         :gtfs_id => row[fields[:trip_id]],
-        :headsign => row[fields[:trip_headsign]]
+        :headsign => (fields[:trip_headsign] == nil ? nil : row[fields[:trip_headsign]])
     end
   end
 
@@ -70,6 +70,16 @@ class Trip < ActiveRecord::Base
 
     self.raw_update(first_stopping, last_stopping)
     print '.'
+  end
+
+  def self.populate_nil_headsigns
+    self.all.each {|trip| trip.populate_nil_headsign}
+  end
+
+  def populate_nil_headsign
+    return if self.headsign != nil
+
+    self.update_attribute(:headsign, Trip.generate_headsign(self.first_stop, self.last_stop))
   end
 
   named_scope :with_null_start_time, :conditions => "start_time is null"
@@ -103,4 +113,17 @@ class Trip < ActiveRecord::Base
   def inspect
     "<Trip #{id}; #{headsign}; #{first_stop} #{start_time} => #{last_stop} #{end_time}>" 
   end
+
+  def self.generate_headsigns(values)
+    values.map {|x| [generate_headsign(x["first_stop"], x["last_stop"]), x["trips_remaining"].to_i] }
+  end
+
+  def self.generate_headsign(first_stop, last_stop)
+    "#{first_stop} to #{last_stop}"
+  end
+
+  def self.headsign_to_stops(headsign)
+    first_stop, last_stop = headsign.split(" to ")
+  end
+
 end
