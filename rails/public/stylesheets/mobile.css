@@ -38,7 +38,7 @@ ul.main-menu {
   font-size: 11px;
   margin-top: 5px;
 }
-table.mbta {
+table.schedule {
   clear: left;
   width: 100%;
   font-size: 12px;
@@ -60,7 +60,7 @@ td.stop-name-header {
 .trips-left {
   color: #333;
 }
-.mbta td {
+.schedule td {
   border: 1px solid #CCC;
 
 }

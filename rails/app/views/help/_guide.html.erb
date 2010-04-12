@@ -11,7 +11,9 @@
           <%=image_tag 'map/PinDown1.png' %>
         </td>
         <td>
-            A red pin is a stop. You can tap on any pin to show the stop name and up to the next three arrival times. If there are no more arrivals for the day, you'll see a message saying so. 
+          A red pin is a stop. You can tap on any pin to show the stop name 
+          and up to the next three arrival times. If there are no more arrivals 
+          for the day, you'll see a message saying so. 
         </td>
       </tr>
       <tr>
@@ -19,7 +21,9 @@
           <%=image_tag 'map/PinDown1Green.png' %>
         </td>
         <td>
-          A green pin is the starting point of a trip. A route might have more than one starting point if trips start from different places at different times of the day.
+          A green pin is the starting point of a trip. A route might have more 
+          than one starting point if trips start from different places at 
+          different times of the day.
         </td>
       </tr>
       <tr>
@@ -28,7 +32,10 @@
         </td>
         <td>
             A purple pin is a stop where a <%= @transport_type.downcase %> is
-            just about to arrive according to the MBTA schedule. You can take this as a rough indicator of where a <%= @transport_type.downcase %> is, or at least should be, based on the schedule.
+            just about to arrive according to the <%= @operators %> schedule. You 
+            can take this as a rough indicator of where a 
+            <%= @transport_type.downcase %> is, or at least should be, based on 
+            the schedule.
         </td>
       </tr>
       <tr>
@@ -46,6 +53,8 @@
     </table>
 
     <p>
-    In the table view, the nearest stop is colored <span class='red'>red</span>, the starting point(s) <span class='green'>green</span>, the imminent stops <span class='purple'>purple</span>.
+    In the table view, the nearest stop is colored <span class='red'>red</span>, the 
+    starting point(s) <span class='green'>green</span>, the imminent stops 
+    <span class='purple'>purple</span>.
     </p>
 

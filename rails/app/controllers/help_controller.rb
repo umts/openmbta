@@ -6,6 +6,8 @@ class HelpController < ApplicationController
     if ['subway', 'commuter rail'].include? @transport_type.downcase 
       @transport_type = @transport_type + ' train'
     end
+
+    @operators = Agency.links
   end
 
 end
