@@ -1,6 +1,6 @@
 module Subway
 
-  ROUTE_NAME_TO_MBTA_ID = {
+  ROUTE_NAME_TO_GTFS_ID = {
     "Green Line" => %w{810 811 812 822 830 831 852 880 881},
     "Red Line" => %w{931 933 899},
     "Blue Line" => %w{946 948 9462},
@@ -12,10 +12,10 @@ module Subway
   # {"Green Line"=>[957, 959, 961, 963, 965, 967, 978, 992, 994], "Blue
   # Line"=>[1039, 1041], "Orange Line"=>[1011, 1017], "Red Line"=>[1027, 1033]}
   ROUTE_NAME_TO_ID = if RAILS_ENV != 'test'
-    ROUTE_NAME_TO_MBTA_ID.inject({}) do |memo, pair|
+    ROUTE_NAME_TO_GTFS_ID.inject({}) do |memo, pair|
       line_name, numbers = pair
       ids = numbers.map {|number| 
-        routes = Route.all(:conditions => ["route_type in (0,1) and mbta_id like ?", "#{number}%"])
+        routes = Route.all(:conditions => ["route_type in (0,1) and gtfs_id like ?", "#{number}%"])
         routes.map(&:id)
       }.flatten
       memo[line_name] = ids
@@ -42,7 +42,11 @@ module Subway
   # subway headsigns are often too ambiguous; so we need to group by first_stop
   def self.routes(now = Now.new)
     service_ids = Service.active_on(now.date).map(&:id)
-    results = ActiveRecord::Base.connection.select_all("select routes.id as route_id,  trips.headsign, count(trips.id) as trips_remaining from routes inner join trips on routes.id = trips.route_id where routes.route_type in (0,1) and trips.end_time > '#{now.time}' and trips.service_id in (#{service_ids.join(',')}) group by trips.headsign").
+    results = ActiveRecord::Base.connection.select_all(
+      "select routes.id as route_id,  trips.headsign, count(trips.id) as trips_remaining 
+       from routes inner join trips on routes.id = trips.route_id 
+       where routes.route_type in (0,1) and trips.end_time > '#{now.time}' 
+       and trips.service_id in (#{service_ids.join(',')}) group by trips.headsign").
       group_by {|r| 
         puts r.inspect
         puts ROUTE_ID_TO_NAME[r["route_id"].to_i]
@@ -53,16 +57,20 @@ module Subway
   # subway headsigns are often too ambiguous; so we need to group by first_stop
   def self.new_routes(now = Now.new)
     service_ids = Service.active_on(now.date).map(&:id)
-    results = ActiveRecord::Base.connection.select_all("select routes.id as route_id, trips.first_stop, trips.headsign, count(trips.id) as trips_remaining from routes inner join trips on routes.id = trips.route_id where routes.route_type in (0,1) and trips.end_time > '#{now.time}' and trips.service_id in (#{service_ids.join(',')}) group by trips.headsign, trips.first_stop").
+    results = ActiveRecord::Base.connection.select_all(
+      "select routes.id as route_id, trips.first_stop, trips.headsign, 
+       count(trips.id) as trips_remaining 
+       from routes inner join trips on routes.id = trips.route_id 
+       where routes.route_type in (0,1) 
+       and trips.end_time > '#{now.time}' 
+       and trips.service_id in (#{service_ids.join(',')}) 
+       group by trips.headsign, trips.first_stop").
       group_by {|r| 
         puts r.inspect
         puts ROUTE_ID_TO_NAME[r["route_id"].to_i]
         ROUTE_ID_TO_NAME[r["route_id"].to_i]}.
       map { |route_name, values| { :route_short_name  =>  route_name, :headsigns => generate_new_headsigns(values) }}
   end
-
-
-
 
   # [{"route_short_name":"Red
   # Line","headsigns":[["Alewife",10],["Braintree",5]]},{"route_short_name":"Blue
@@ -71,7 +79,7 @@ module Subway
   # - Riverside",9],["E - Heath Street",7],["Government
   # Center",12],["Lechmere",9],["North Station",6]]},{"route_short_name":"Orange
   # Line","headsigns":[["Forest Hills",6],["Oak Grove",5]]}]hellenic
-  # ~/MBTA/rails:
+  # ~/GTFS/rails:
   def self.trips(options)
     now = options[:now] || Now.new
     date = now.date
