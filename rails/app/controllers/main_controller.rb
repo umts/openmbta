@@ -3,14 +3,14 @@ class MainController < ApplicationController
 
   def index
     #@modes = %W[ bus commuter_rail subway boat ]
-    modes = []
+    @modes = []
     [Bus, CommuterRail, Subway, Boat].each do |mode|
       @modes << mode.to_s.underscore unless mode.routes.size == 0
     end
 
     @twittags = []
     if TWIT_CONFIG['enabled']
-      @twittags = Agency.all.map { |a| a.acronym.downcase } + 
+      @twittags = Agency.all.map { |a| '#' + a.acronym.downcase } + 
         TWIT_CONFIG['additional_tags']
     end
 

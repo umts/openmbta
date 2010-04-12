@@ -9,7 +9,7 @@ module Boat
 
   NAME_TO_GTFS_ID = GTFS_ID_TO_NAME.invert
 
-  if RAILS_ENV != 'test'
+  unless RAILS_ENV == 'test' || Route.boat.empty?
     ROUTE_ID_TO_NAME = GTFS_ID_TO_NAME.inject({}) do |memo, pair|
       gtfs_id, name = pair
       route_id = Route.find_by_gtfs_id(gtfs_id).id
