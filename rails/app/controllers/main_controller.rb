@@ -7,6 +7,8 @@ class MainController < ApplicationController
     [Bus, CommuterRail, Subway, Boat].each do |mode|
       @modes << mode.to_s.underscore unless mode.routes.size == 0
     end
+
+    @twittags = Agency.all.map { |a| a.acronym.downcase }
   end
 
 end

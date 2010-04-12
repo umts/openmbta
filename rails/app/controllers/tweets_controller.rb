@@ -1,8 +1,13 @@
 require 'rexml/document'
+require 'uri'
+
 class TweetsController < ApplicationController
   layout 'mobile'
   def index
-    cmd  = "curl -s http://search.twitter.com/search.atom?q=%23mbta"
+    @search = params[:search]
+    escaped_search = URI.escape(@search)
+
+    cmd  = "curl -s http://search.twitter.com/search.atom?q=#{escaped_search}"
     logger.debug cmd
     xml_string = `#{cmd}`
 

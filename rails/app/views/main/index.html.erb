@@ -13,9 +13,11 @@
     <%= link_to "T-Alerts", '/alerts.html' %> 
   </li>
   -->
-  <li>
-    <%= link_to "Twitter #mbta", tweets_path  %> 
-  </li>
+  <% @twittags.each do |t| %>
+    <li>
+      <%= link_to "Twitter #{t}", :controller => 'tweets', :search => t  %> 
+    </li>
+  <% end %>
   <li>
     <%= link_to "About/FAQ", "/about/mobile_version" %> 
   </li>
