@@ -38,7 +38,7 @@ If your device allows geo-location, the closest stop will be <span class="exampl
 
 <%= render :partial => 'pager_controls' %>
 
-<table class='mbta'>
+<table class='schedule'>
   <% @result[:ordered_stop_ids].each do |stop_id| %>
     <tr  class='row-header stop-name'>
       <td id="<%=stop_id%>" colspan="<%= @cols %>" class="stop-name-header">
