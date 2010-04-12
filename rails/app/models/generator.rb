@@ -1,6 +1,7 @@
 module Generator
+  require 'csv'
+  
   def self.generate(datafile)
-    require 'csv'
     path = File.join(Rails.root, 'data', datafile)
 
     reader = CSV.open(path, 'r') 
@@ -14,5 +15,20 @@ module Generator
       end
     end
   end
+
+  # Returns a hash of the fields fo a GTFS file
+  def self.get_fields(datafile)
+    path = File.join(Rails.root, 'data', datafile)
+    fields = Hash.new
+ 
+    reader = CSV.open(path, 'r')
+    field_list = reader.shift
+
+    field_list.each do |f|
+      fields[f.to_sym] = field_list.index(f)
+    end
+      
+    return fields
+  end  
 
 end

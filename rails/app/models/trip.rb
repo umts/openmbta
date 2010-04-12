@@ -32,13 +32,16 @@ class Trip < ActiveRecord::Base
 
 
   def self.populate
-    Generator.generate('trips.txt') do |row|
-      route = Route.find_by_mbta_id row[0]
-      service = Service.find_by_mbta_id row[1]
+    file = 'trips.txt'
+    fields = Generator.get_fields(file)
+
+    Generator.generate(file) do |row|
+      route = Route.find_by_gtfs_id row[fields[:route_id]]
+      service = Service.find_by_gtfs_id row[fields[:service_id]]
       Trip.create :route => route,
         :service => service,
-        :mbta_id => row[2],
-        :headsign => row[3]
+        :gtfs_id => row[fields[:trip_id]],
+        :headsign => row[fields[:trip_headsign]]
     end
   end
 

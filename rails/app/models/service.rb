@@ -50,16 +50,20 @@ class Service < ActiveRecord::Base
 
 
   def self.populate
-    Generator.generate('calendar.txt') do |row|
-      end_date = Date.new(*ParseDate::parsedate(row[9])[0,3])
+    file = 'calendar.txt'
+    fields = Generator.get_fields(file)
+
+    Generator.generate(file) do |row|
+      end_date = Date.new(*ParseDate::parsedate(row[fields[:end_date]])[0,3])
       if end_date < Date.today
         next
       end
-      service = Service.new :mbta_id => row[0]
-      %w{monday tuesday wednesday thursday friday saturday sunday}.each_with_index do |day, index|
-        service.send("#{day}=", row[index+1] == '1')
+      service = Service.new :gtfs_id => row[fields[:service_id]]
+      DAYS.each do |day|
+        service.send("#{day}=", row[fields[day.to_sym]] == '1')
       end
-      service.start_date = Date.new(*ParseDate::parsedate(row[8])[0,3])
+
+      service.start_date = Date.new(*ParseDate::parsedate(row[fields[:start_date]])[0,3])
       service.end_date = end_date
       service.save
     end
