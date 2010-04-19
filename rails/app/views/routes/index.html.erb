@@ -51,9 +51,9 @@ tomorrow (or Monday) morning, and chances are that you'll see it. If not, please
         <a name="<%=route[:route_short_name]%>"></a>
         <%= 
           if route[:route_short_name] == ' ' || route[:route_long_name] == ' '
-            route[:route_short_name] + route[:route_long_name]
+            "#{route[:route_short_name]} <span class='route_name'>#{route[:route_long_name]}</span>"
           else
-            route[:route_short_name] + ' &ndash; ' + route[:route_long_name]
+            "#{route[:route_short_name]} <span class='route_name'> &ndash; #{route[:route_long_name]}</span>"
           end
         %>
 

@@ -49,6 +49,11 @@ tr.row-header {
   background-color: #EFEFEF;
   font-weight:bold;
 }
+
+.route_name {
+  font-weight: normal;
+}
+
 td.stop-name-header {
   padding-top:2px;
   padding-bottom: 1px;
