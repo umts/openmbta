@@ -9,7 +9,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091021190030) do
+ActiveRecord::Schema.define(:version => 20100419173417) do
+
+  create_table "agencies", :force => true do |t|
+    t.string "gtfs_id"
+    t.string "name"
+    t.string "url"
+    t.string "tz"
+    t.string "phone"
+  end
 
   create_table "alerts", :force => true do |t|
     t.string   "title"
@@ -22,7 +30,7 @@ ActiveRecord::Schema.define(:version => 20091021190030) do
   add_index "alerts", ["guid"], :name => "index_alerts_on_guid"
 
   create_table "routes", :force => true do |t|
-    t.string  "mbta_id"
+    t.string  "gtfs_id"
     t.string  "short_name"
     t.string  "long_name"
     t.integer "route_type"
@@ -41,7 +49,7 @@ ActiveRecord::Schema.define(:version => 20091021190030) do
   add_index "service_exceptions", ["service_id", "exception_type"], :name => "index_service_exceptions_on_service_id_and_exception_type"
 
   create_table "services", :force => true do |t|
-    t.string  "mbta_id"
+    t.string  "gtfs_id"
     t.boolean "monday"
     t.boolean "tuesday"
     t.boolean "wednesday"
@@ -66,16 +74,16 @@ ActiveRecord::Schema.define(:version => 20091021190030) do
   add_index "stoppings", ["trip_id"], :name => "index_stoppings_on_trip_id"
 
   create_table "stops", :force => true do |t|
-    t.string "mbta_id"
+    t.string "gtfs_id"
     t.string "name"
     t.float  "lat"
     t.float  "lng"
   end
 
-  add_index "stops", ["mbta_id"], :name => "index_stops_on_mbta_id"
+  add_index "stops", ["gtfs_id"], :name => "index_stops_on_gtfs_id"
 
   create_table "trips", :force => true do |t|
-    t.string  "mbta_id"
+    t.string  "gtfs_id"
     t.integer "route_id"
     t.integer "service_id"
     t.string  "headsign"
@@ -92,8 +100,8 @@ ActiveRecord::Schema.define(:version => 20091021190030) do
   end
 
   add_index "trips", ["end_time"], :name => "index_trips_on_end_time"
+  add_index "trips", ["gtfs_id"], :name => "index_trips_on_gtfs_id"
   add_index "trips", ["headsign"], :name => "index_trips_on_headsign"
-  add_index "trips", ["mbta_id"], :name => "index_trips_on_mbta_id"
   add_index "trips", ["route_id"], :name => "index_trips_on_route_id"
   add_index "trips", ["service_id"], :name => "index_trips_on_service_id"
 
