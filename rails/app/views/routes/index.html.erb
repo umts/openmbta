@@ -49,7 +49,14 @@ tomorrow (or Monday) morning, and chances are that you'll see it. If not, please
     <tr class='row-header stop-name'>
       <td colspan="3">
         <a name="<%=route[:route_short_name]%>"></a>
-        <%= route[:route_short_name] %>
+        <%= 
+          if route[:route_short_name] == ' ' || route[:route_long_name] == ' '
+            route[:route_short_name] + route[:route_long_name]
+          else
+            route[:route_short_name] + ' &ndash; ' + route[:route_long_name]
+          end
+        %>
+
         <span class="stop-detail"><%= @result.size > 30 && index > 6 ? "<a style='float:right' href='#top'>top</a>" : nil %></span>
 
       </td>
