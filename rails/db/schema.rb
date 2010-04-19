@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100317153222) do
+ActiveRecord::Schema.define(:version => 20100419173417) do
 
   create_table "agencies", :force => true do |t|
     t.string "gtfs_id"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(:version => 20100317153222) do
     t.float  "lng"
   end
 
-  add_index "stops", ["gtfs_id"], :name => "index_stops_on_mbta_id"
+  add_index "stops", ["gtfs_id"], :name => "index_stops_on_gtfs_id"
 
   create_table "trips", :force => true do |t|
     t.string  "gtfs_id"
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(:version => 20100317153222) do
   end
 
   add_index "trips", ["end_time"], :name => "index_trips_on_end_time"
-  add_index "trips", ["gtfs_id"], :name => "index_trips_on_mbta_id"
+  add_index "trips", ["gtfs_id"], :name => "index_trips_on_gtfs_id"
   add_index "trips", ["headsign"], :name => "index_trips_on_headsign"
   add_index "trips", ["route_id"], :name => "index_trips_on_route_id"
   add_index "trips", ["service_id"], :name => "index_trips_on_service_id"
