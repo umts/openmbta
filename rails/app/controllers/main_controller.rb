@@ -15,6 +15,14 @@ class MainController < ApplicationController
     end
 
     @agency_links = Agency.links
+    
+    @logo =
+      if File.exist?( File.join( Rails.root, "public/images/Agency.png" ) ) then
+        "Agency.png"
+      else
+        "Default.png"
+      end
+
   end
 
 end
