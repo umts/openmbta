@@ -30,7 +30,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/mobile', :controller => 'main'
   map.connect '/main', :controller => 'main'
 
-  map.root :controller => 'home'
+  map.root :controller => 'main'
 
 
   # The priority is based upon order of creation: first created -> highest priority.
