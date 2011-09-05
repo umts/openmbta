@@ -2,6 +2,7 @@ module Bus
 
   def self.routes(now = Now.new)
     service_ids = Service.active_on(now.date).map(&:id)
+    return [] if service_ids.empty?
     ActiveRecord::Base.connection.select_all(
       "select routes.short_name as route_short_name,
        routes.long_name as route_long_name,

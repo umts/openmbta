@@ -3,6 +3,7 @@ module CommuterRail
 
   def self.routes(now = Now.new)
     service_ids = Service.active_on(now.date).map(&:id)
+    return [] if service_ids.empty?
     results = ActiveRecord::Base.connection.select_all(
       "select routes.gtfs_id, trips.headsign, count(trips.id) as trips_remaining 
        from routes inner join trips on routes.id = trips.route_id 
