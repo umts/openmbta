@@ -3,10 +3,16 @@
 </div>
 
 <ul class="main-menu">
-  <% @modes.each do |m| %>
+  <% if @modes.empty? %>
     <li>
-    <%= link_to "#{m.titleize} Schedules", "/routes/#{m}" %>
+    There is no service today.
     </li>
+  <% else %>
+    <% @modes.each do |m| %>
+      <li>
+      <%= link_to "#{m.titleize} Schedules", "/routes/#{m}" %>
+      </li>
+    <% end %>
   <% end %>
   <!--
   <li>
