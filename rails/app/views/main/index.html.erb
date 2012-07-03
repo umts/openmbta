@@ -5,7 +5,7 @@
 <ul class="main-menu">
   <% if @modes.empty? %>
     <li>
-    There is no service today.
+    There are no remaining trips today.
     </li>
   <% else %>
     <% @modes.each do |m| %>
@@ -25,7 +25,7 @@
     </li>
   <% end %>
   <li>
-    <%= link_to "About", "/about/mobile_version" %> 
+    <%= link_to "About Mobile Schedules", "/about/mobile_version" %> 
   </li>
 </ul>
 
