@@ -1,3 +1,18 @@
+---
+
+---
+
+---
+
+Note that this fork is no longer maintained or deployed. It is preserved
+here for historical interest.
+
+---
+
+---
+
+---
+
 # OpenMBTA 
 
 [OpenMBTA](http://openmbta.org) gives users current schedule information for
@@ -28,7 +43,7 @@ maintains a list of many [public feeds](http://code.google.com/p/
 googletransitdatafeed/wiki/PublicFeeds); you might also check the [GTFS Data
 Exchange](http://www.gtfs-data-exchange.com/).
 
-Unzip the file. You should see a bunch of *.txt files. These are the GTFS files.
+Unzip the file. You should see a bunch of `*.txt` files. These are the GTFS files.
 Transfer these files to the `rails/data` directory.
 
 Now we're ready to populate the MySQL database with the GFTS data. There is a
